@@ -49,47 +49,22 @@ async function populateBreedsSelect() {
         loader.style.display = "block";
         try {
           const catInfo = await fetchCatByBreed(selectedBreedId);
-  //         displayCatInfo(catInfo[0]);
-  //       } catch (error) {
-  //         displayError();
-  //       } finally {
-  //         loader.style.display = "none";
-  //       }
-  //     } else {
-  //       hideCatInfo();
-  //     }
-  //   });
-  // } catch (error) {
-  //   displayError();
-  // } finally {
-  //   loader.style.display = "none";
-  // }
-  if (catInfo) {
-            // Якщо є інформація про кота, відображаємо її
-            displayCatInfo(catInfo[0]);
-          } else {
-            // Якщо кота не знайдено, приховуємо інформацію про кота
-            hideCatInfo();
-            displayError("Кота не знайдено для цієї породи");
-          }
+          displayCatInfo(catInfo[0]);
         } catch (error) {
-          // Приховуємо інформацію про кота при виникненні помилки
-          hideCatInfo();
-          displayError("Не вдалося отримати інформацію про кота");
+          displayError();
         } finally {
           loader.style.display = "none";
         }
       } else {
-        // Якщо не обрано породу, приховуємо інформацію про кота
         hideCatInfo();
       }
     });
   } catch (error) {
-    // Відображаємо повідомлення про помилку, якщо не вдалося отримати список порід
-    displayError("Не вдалося отримати список порід");
+    displayError();
   } finally {
     loader.style.display = "none";
   }
+ 
 }
 
 // Функція для відображення інформації про кота
