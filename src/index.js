@@ -18,9 +18,14 @@ async function fetchCatByBreed(breedId) {
     const response = await axios.get(
       `https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`
     );
+
+    if (response.data.length === 0) {
+      return null;
+    }
+
     return response.data;
   } catch (error) {
-    throw new Error("Failed to fetch cat information");
+    return null;
   }
 }
 
@@ -44,18 +49,44 @@ async function populateBreedsSelect() {
         loader.style.display = "block";
         try {
           const catInfo = await fetchCatByBreed(selectedBreedId);
-          displayCatInfo(catInfo[0]);
+  //         displayCatInfo(catInfo[0]);
+  //       } catch (error) {
+  //         displayError();
+  //       } finally {
+  //         loader.style.display = "none";
+  //       }
+  //     } else {
+  //       hideCatInfo();
+  //     }
+  //   });
+  // } catch (error) {
+  //   displayError();
+  // } finally {
+  //   loader.style.display = "none";
+  // }
+  if (catInfo) {
+            // Якщо є інформація про кота, відображаємо її
+            displayCatInfo(catInfo[0]);
+          } else {
+            // Якщо кота не знайдено, приховуємо інформацію про кота
+            hideCatInfo();
+            displayError("Кота не знайдено для цієї породи");
+          }
         } catch (error) {
-          displayError();
+          // Приховуємо інформацію про кота при виникненні помилки
+          hideCatInfo();
+          displayError("Не вдалося отримати інформацію про кота");
         } finally {
           loader.style.display = "none";
         }
       } else {
+        // Якщо не обрано породу, приховуємо інформацію про кота
         hideCatInfo();
       }
     });
   } catch (error) {
-    displayError();
+    // Відображаємо повідомлення про помилку, якщо не вдалося отримати список порід
+    displayError("Не вдалося отримати список порід");
   } finally {
     loader.style.display = "none";
   }
@@ -79,6 +110,13 @@ function hideCatInfo() {
   catInfoDiv.innerHTML = "";
   catInfoDiv.style.display = "none";
 }
+
+ // Приховати зображення кота також
+ const catImage = document.querySelector(".cat-info img");
+ if (catImage) {
+   catImage.style.display = "none";
+ }
+
 
 // Функція для відображення помилки
 function displayError() {
