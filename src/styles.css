@@ -1,0 +1,9 @@
+.loader,
+.error{
+  display: none;
+}
+
+.loader {
+    display: block;
+}
+  
