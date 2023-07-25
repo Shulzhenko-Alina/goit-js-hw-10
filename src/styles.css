@@ -7,3 +7,13 @@
     display: block;
 }
   
+.is-hidden {
+    display: none;
+    
+  }
+  .breed-select{
+    margin-bottom: 25px;
+  }
+  .cat-info{
+    max-width: 800px;
+  }
